@@ -4,9 +4,11 @@ class SelectorNiveles extends StatelessWidget {
   const SelectorNiveles({
     super.key,
     required this.valor,
+    required this.cambiarDeNivel,
   });
 
   final double valor;
+  final void Function(int) cambiarDeNivel;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,9 @@ class SelectorNiveles extends StatelessWidget {
           min: 0,
           max: 3,
           divisions: 3,
-          onChanged: (valorSeleccionado) {},
+          onChanged: (double valorSeleccionado) {
+            cambiarDeNivel(valorSeleccionado.toInt());
+          },
         ),
       ],
     );

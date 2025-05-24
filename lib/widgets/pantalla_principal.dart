@@ -17,6 +17,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _controladorNumero = TextEditingController();
+  int _indiceNivelSeleccionado = 0;
 
   String? _validarEntradaUsuario(String? cadenaIngresada) {
     //TODO: validar rangos de acuerdo al nivel seleccionado.
@@ -36,10 +37,17 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
     return null;
   }
 
-  void _gestionarAdivinanza() {
+  void _gestionarIntento() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
     }
+  }
+
+  void _cambiarNivelDelJuego(int nivelSeleccionado) {
+    print(nivelSeleccionado);
+    setState(() {
+      _indiceNivelSeleccionado = nivelSeleccionado;
+    });
   }
 
   @override
@@ -72,7 +80,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                         maxLength: 4,
                         controller: _controladorNumero,
                         validator: _validarEntradaUsuario,
-                        onEditingComplete: _gestionarAdivinanza,
+                        onEditingComplete: _gestionarIntento,
                         decoration: InputDecoration(
                           label: Text('Numero'),
                           border: OutlineInputBorder(),
@@ -124,7 +132,8 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                 height: 64,
               ),
               SelectorNiveles(
-                valor: 1,
+                valor: _indiceNivelSeleccionado.toDouble(),
+                cambiarDeNivel: _cambiarNivelDelJuego,
               ),
             ],
           ),
