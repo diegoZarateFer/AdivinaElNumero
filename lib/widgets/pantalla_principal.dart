@@ -16,6 +16,32 @@ class PantallaPrincipal extends StatefulWidget {
 class _PantallaPrincipalState extends State<PantallaPrincipal> {
   final _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _controladorNumero = TextEditingController();
+
+  String? _validarEntradaUsuario(String? cadenaIngresada) {
+    //TODO: validar rangos de acuerdo al nivel seleccionado.
+    if (cadenaIngresada == null || cadenaIngresada.trim().isEmpty) {
+      return 'Ingresa un número';
+    }
+
+    var numeroIngresado = int.tryParse(cadenaIngresada);
+    if (numeroIngresado == null) {
+      return 'Debes ingresar un entero';
+    }
+
+    if (numeroIngresado <= 0) {
+      return 'Debe ser mayor a 0';
+    }
+
+    return null;
+  }
+
+  void _gestionarAdivinanza() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +70,9 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                       child: TextFormField(
                         keyboardType: TextInputType.numberWithOptions(),
                         maxLength: 4,
+                        controller: _controladorNumero,
+                        validator: _validarEntradaUsuario,
+                        onEditingComplete: _gestionarAdivinanza,
                         decoration: InputDecoration(
                           label: Text('Numero'),
                           border: OutlineInputBorder(),
