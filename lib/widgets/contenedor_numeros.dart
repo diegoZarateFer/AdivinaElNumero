@@ -4,14 +4,16 @@ class ContenedorNumeros extends StatelessWidget {
   const ContenedorNumeros({
     super.key,
     required this.numeros,
+    required this.titulo,
   });
 
+  final String titulo;
   final List<int> numeros;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 360,
+      height: 280,
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
@@ -21,18 +23,33 @@ class ContenedorNumeros extends StatelessWidget {
           Radius.circular(12),
         ),
       ),
-      child: ListView.builder(
-        itemCount: numeros.length,
-        itemBuilder: (ctx, index) {
-          return Center(
-            child: Text(
-              '${numeros[index]}',
-              style: TextStyle(
-                fontSize: 18,
-              ),
+      child: Column(
+        children: [
+          Text(
+            titulo,
+            style: TextStyle(
+              fontSize: 14,
             ),
-          );
-        },
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: numeros.length,
+              itemBuilder: (ctx, index) {
+                return Center(
+                  child: Text(
+                    '${numeros[index]}',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

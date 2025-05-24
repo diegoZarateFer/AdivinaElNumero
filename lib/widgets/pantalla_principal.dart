@@ -60,7 +60,22 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
               const SizedBox(
                 height: 16,
               ),
-              ContenedorNumeros(numeros: [1, 2, 3, 4, 5, 6]),
+              Row(
+                children: [
+                  Expanded(
+                    child: ContenedorNumeros(
+                      titulo: 'Mayor que',
+                      numeros: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                    ),
+                  ),
+                  Expanded(
+                    child: ContenedorNumeros(
+                      titulo: 'Menor que',
+                      numeros: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
