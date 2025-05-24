@@ -1,6 +1,7 @@
 import 'package:adivinaelnumero/widgets/contador_intentos.dart';
 import 'package:adivinaelnumero/widgets/contenedor_numeros.dart';
 import 'package:adivinaelnumero/widgets/historial.dart';
+import 'package:adivinaelnumero/widgets/selector_niveles.dart';
 import 'package:flutter/material.dart';
 
 class PantallaPrincipal extends StatefulWidget {
@@ -87,7 +88,13 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                     ),
                   ),
                 ],
-              )
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+              SelectorNiveles(
+                valor: 1,
+              ),
             ],
           ),
         ),

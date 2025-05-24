@@ -15,7 +15,7 @@ final theme = ThemeData().copyWith(
   scaffoldBackgroundColor: const Color.fromARGB(255, 38, 38, 38),
   colorScheme: esquemaColor,
   appBarTheme: AppBarTheme(
-    color: const Color.fromARGB(255, 71, 71, 71),
+    color: const Color.fromARGB(255, 45, 45, 45),
   ),
   textTheme: TextTheme(
     bodyLarge: TextStyle(
@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: theme,
       home: PantallaPrincipal(),
     );
