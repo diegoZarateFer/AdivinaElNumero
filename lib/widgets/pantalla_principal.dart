@@ -1,5 +1,6 @@
 import 'package:adivinaelnumero/widgets/contador_intentos.dart';
 import 'package:adivinaelnumero/widgets/contenedor_numeros.dart';
+import 'package:adivinaelnumero/widgets/historial.dart';
 import 'package:flutter/material.dart';
 
 class PantallaPrincipal extends StatefulWidget {
@@ -68,10 +69,21 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                       numeros: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
                     ),
                   ),
+                  const SizedBox(
+                    width: 16,
+                  ),
                   Expanded(
                     child: ContenedorNumeros(
                       titulo: 'Menor que',
                       numeros: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  Expanded(
+                    child: Historial(
+                      juegos: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
                     ),
                   ),
                 ],
