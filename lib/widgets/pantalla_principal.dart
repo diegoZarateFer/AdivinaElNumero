@@ -18,6 +18,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
 
   final TextEditingController _controladorNumero = TextEditingController();
   int _indiceNivelSeleccionado = 0;
+  int _intentosRestantes = 5;
 
   int _obtenerIntervalo(int indiceDelNivel) {
     return indiceDelNivel == 0
@@ -75,6 +76,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
   void _cambiarNivelDelJuego(int nivelSeleccionado) {
     setState(() {
       _indiceNivelSeleccionado = nivelSeleccionado;
+      _intentosRestantes = _obtenerNumeroDeIntentos(nivelSeleccionado);
     });
 
     _controladorNumero.clear();
@@ -125,7 +127,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                     width: 32,
                   ),
                   ContadorIntentos(
-                    intentosRestantes: 5,
+                    intentosRestantes: _intentosRestantes,
                   ),
                 ],
               ),
