@@ -1,4 +1,5 @@
 import 'package:adivinaelnumero/widgets/contador_intentos.dart';
+import 'package:adivinaelnumero/widgets/contenedor_numeros.dart';
 import 'package:flutter/material.dart';
 
 class PantallaPrincipal extends StatefulWidget {
@@ -18,6 +19,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Adivina el Número'),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {},
@@ -25,27 +27,43 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Row(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
             children: [
-              Form(
-                key: _formKey,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    label: Text('Numeros'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 180,
+                    child: Form(
+                      key: _formKey,
+                      child: TextFormField(
+                        maxLength: 4,
+                        decoration: InputDecoration(
+                          label: Text('Numero'),
+                          border: OutlineInputBorder(),
+                          hintText: '####',
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(
+                    width: 32,
+                  ),
+                  ContadorIntentos(
+                    intentosRestantes: 5,
+                  ),
+                ],
               ),
               const SizedBox(
-                width: 8,
+                height: 16,
               ),
-              ContadorIntentos(
-                intentosRestantes: 5,
-              ),
+              ContenedorNumeros(numeros: [1, 2, 3, 4, 5, 6]),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
