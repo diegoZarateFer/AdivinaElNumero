@@ -42,6 +42,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
+                        keyboardType: TextInputType.numberWithOptions(),
                         maxLength: 4,
                         decoration: InputDecoration(
                           label: Text('Numero'),
