@@ -47,6 +47,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                           label: Text('Numero'),
                           border: OutlineInputBorder(),
                           hintText: '####',
+                          counterText: "",
                         ),
                       ),
                     ),
@@ -90,7 +91,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                 ],
               ),
               const SizedBox(
-                height: 32,
+                height: 64,
               ),
               SelectorNiveles(
                 valor: 1,
