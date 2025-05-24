@@ -19,10 +19,33 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
   final TextEditingController _controladorNumero = TextEditingController();
   int _indiceNivelSeleccionado = 0;
 
+  int _obtenerIntervalo(int indiceDelNivel) {
+    return indiceDelNivel == 0
+        ? 10
+        : indiceDelNivel == 1
+            ? 20
+            : indiceDelNivel == 2
+                ? 100
+                : 1000;
+  }
+
+  int _obtenerNumeroDeIntentos(int indiceDelNivel) {
+    return indiceDelNivel == 0
+        ? 5
+        : indiceDelNivel == 1
+            ? 8
+            : indiceDelNivel == 2
+                ? 15
+                : 25;
+  }
+
   String? _validarEntradaUsuario(String? cadenaIngresada) {
-    //TODO: validar rangos de acuerdo al nivel seleccionado.
-    if (cadenaIngresada == null || cadenaIngresada.trim().isEmpty) {
-      return 'Ingresa un número';
+    if (cadenaIngresada == null) {
+      return 'Campo vacio';
+    }
+
+    if (cadenaIngresada.trim().isEmpty) {
+      return null;
     }
 
     var numeroIngresado = int.tryParse(cadenaIngresada);
@@ -34,20 +57,28 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
       return 'Debe ser mayor a 0';
     }
 
+    int maxNumero = _obtenerIntervalo(_indiceNivelSeleccionado);
+    if (numeroIngresado > maxNumero) {
+      return 'Debe ser <= $maxNumero';
+    }
+
     return null;
   }
 
   void _gestionarIntento() {
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate() &&
+        _controladorNumero.text.isNotEmpty) {
       _formKey.currentState!.save();
     }
   }
 
   void _cambiarNivelDelJuego(int nivelSeleccionado) {
-    print(nivelSeleccionado);
     setState(() {
       _indiceNivelSeleccionado = nivelSeleccionado;
     });
+
+    _controladorNumero.clear();
+    _formKey.currentState!.validate();
   }
 
   @override
