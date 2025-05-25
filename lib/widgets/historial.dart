@@ -38,7 +38,7 @@ class Historial extends StatelessWidget {
               itemBuilder: (ctx, index) {
                 return Center(
                   child: Text(
-                    '${juegos[index]}',
+                    '${juegos[index] < 0 ? -juegos[index] : juegos[index]}',
                     style: TextStyle(
                       fontSize: 18,
                       color: juegos[index] < 0 ? Colors.red : Colors.green,
