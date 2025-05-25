@@ -41,6 +41,7 @@ class Historial extends StatelessWidget {
                     '${juegos[index]}',
                     style: TextStyle(
                       fontSize: 18,
+                      color: juegos[index] < 0 ? Colors.red : Colors.green,
                     ),
                   ),
                 );
