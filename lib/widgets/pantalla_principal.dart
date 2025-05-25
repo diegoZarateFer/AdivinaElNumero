@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:adivinaelnumero/widgets/contador_intentos.dart';
 import 'package:adivinaelnumero/widgets/contenedor_numeros.dart';
 import 'package:adivinaelnumero/widgets/historial.dart';
@@ -19,6 +21,12 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
   final TextEditingController _controladorNumero = TextEditingController();
   int _indiceNivelSeleccionado = 0;
   int _intentosRestantes = 5;
+  int _numeroEscondido = Random().nextInt(10) + 1;
+  List<int> _mayorQue = [], _menorQue = [];
+
+  int _generarNumeroEscondido(int maxNumero) {
+    return Random().nextInt(maxNumero) + 1;
+  }
 
   int _obtenerIntervalo(int indiceDelNivel) {
     return indiceDelNivel == 0
@@ -70,13 +78,57 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
     if (_formKey.currentState!.validate() &&
         _controladorNumero.text.isNotEmpty) {
       _formKey.currentState!.save();
+
+      //Gestionar intento del usuario.
+      int numeroIngresado = int.parse(_controladorNumero.text.toString());
+      if (numeroIngresado == _numeroEscondido) {
+        // Se ha adivinado el número
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('¡Has ganado!'),
+          ),
+        );
+
+        _generarNuevoNivel(_indiceNivelSeleccionado);
+      } else if (numeroIngresado > _numeroEscondido) {
+        // El numero ingresado es mayor que el escondido
+        setState(() {
+          _menorQue.add(numeroIngresado);
+          _intentosRestantes--;
+        });
+      } else {
+        // El numero ingresado es menor que el escondido
+        setState(() {
+          _mayorQue.add(numeroIngresado);
+          _intentosRestantes--;
+        });
+      }
+
+      // Se terminan los intentos disponibles.
+      if (_intentosRestantes == 0) {
+        _generarNuevoNivel(_indiceNivelSeleccionado);
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Se terminaron los intentos. Has perdido.'),
+          ),
+        );
+      }
+
+      _controladorNumero.clear();
+      FocusScope.of(context).unfocus();
     }
   }
 
-  void _cambiarNivelDelJuego(int nivelSeleccionado) {
+  void _generarNuevoNivel(int nivelSeleccionado) {
     setState(() {
       _indiceNivelSeleccionado = nivelSeleccionado;
+      _numeroEscondido =
+          _generarNumeroEscondido(_obtenerIntervalo(nivelSeleccionado));
       _intentosRestantes = _obtenerNumeroDeIntentos(nivelSeleccionado);
+      _mayorQue = [];
+      _menorQue = [];
     });
 
     _controladorNumero.clear();
@@ -139,7 +191,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                   Expanded(
                     child: ContenedorNumeros(
                       titulo: 'Mayor que',
-                      numeros: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                      numeros: _mayorQue,
                     ),
                   ),
                   const SizedBox(
@@ -148,7 +200,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                   Expanded(
                     child: ContenedorNumeros(
                       titulo: 'Menor que',
-                      numeros: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                      numeros: _menorQue,
                     ),
                   ),
                   const SizedBox(
@@ -156,7 +208,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                   ),
                   Expanded(
                     child: Historial(
-                      juegos: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                      juegos: [],
                     ),
                   ),
                 ],
@@ -166,7 +218,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
               ),
               SelectorNiveles(
                 valor: _indiceNivelSeleccionado.toDouble(),
-                cambiarDeNivel: _cambiarNivelDelJuego,
+                cambiarDeNivel: _generarNuevoNivel,
               ),
             ],
           ),
